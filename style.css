@@ -356,6 +356,19 @@ body {
   }
 }
 
+/* Make sure your link displays properly as a block */
+a.product-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer; 
+}
+
+/* Ensure child elements do NOT block click events */
+.product-card, .product-image, .product-info {
+  pointer-events: auto; 
+}
+
 /* Custom Variables based on Industrial Charcoal & Metallic Theme */
 :root {
   --cta-bg: #1c2621;         /* Deep Forest/Charcoal Slate */

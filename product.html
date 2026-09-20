@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - Joymax Furniture & Metal Work</title>
+  <link rel="icon" type="image/png" href="images/logo_ii.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Theme Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 16px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo span {
+      color: #f59e0b;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #f59e0b;
+    }
+
+    /* Layout Container */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb a {
+      color: #64748b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #0f172a;
+    }
+
+    /* Product Section Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Product Gallery */
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 420px;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #f1f5f9;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Product Details */
+    .product-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #d97706;
+      margin-bottom: 20px;
+    }
+
+    .product-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #475569;
+      margin-bottom: 25px;
+    }
+
+    /* Specifications Table */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    .specs-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    .specs-table td:first-child {
+      font-weight: 600;
+      color: #334155;
+      width: 40%;
+    }
+
+    .specs-table td:last-child {
+      color: #64748b;
+    }
+
+    /* Actions & Quantity */
+    .action-group {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .quantity-control button {
+      background: #f1f5f9;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #334155;
+      transition: background 0.2s;
+    }
+
+    .quantity-control button:hover {
+      background: #e2e8f0;
+    }
+
+    .quantity-control input {
+      width: 50px;
+      text-align: center;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .btn-order {
+      flex: 1;
+      background-color: #f59e0b;
+      color: #ffffff;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-order:hover {
+      background-color: #d97706;
+    }
+
+    .btn-whatsapp {
+      background-color: #25d366;
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-whatsapp:hover {
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px;
+      }
+
+      .main-image {
+        height: 300px;
+      }
+
+      .action-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-whatsapp {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-couch"></i> Joymax <span>Furniture & Metal Work</span>
+    </a>
+    <a href="index.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Back to Products
+    </a>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="index.html#featured-products">Products</a> / <span id="breadcrumb-title">Product Details</span>
+    </div>
+
+    <div class="product-grid">
+      <!-- Image Gallery -->
+      <div class="product-gallery">
+        <div class="main-image">
+          <img id="product-img" src="https://via.placeholder.com/800x600?text=Loading+Image..." alt="Product Image">
+        </div>
+      </div>
+
+      <!-- Details & Actions -->
+      <div class="product-details">
+        <h1 id="product-title" class="product-title">Loading Product...</h1>
+        <div id="product-price" class="product-price">KSh 0.00</div>
+        
+        <p id="product-description" class="product-description">
+          Handcrafted with high-grade materials combining modern aesthetic furniture design with heavy-duty structural steel precision. Built for durability, strength, and elegance.
+        </p>
+
+        <table class="specs-table">
+          <tr>
+            <td>Material Structure</td>
+            <td>Reinforced Steel & Premium Hardwood</td>
+          </tr>
+          <tr>
+            <td>Finish</td>
+            <td>Powder-Coated Anti-Rust Finish / Polish</td>
+          </tr>
+          <tr>
+            <td>Customization</td>
+            <td>Available on request (Colors & Dimensions)</td>
+          </tr>
+          <tr>
+            <td>Availability</td>
+            <td>In Stock / Made to Order</td>
+          </tr>
+        </table>
+
+        <div class="action-group">
+          <div class="quantity-control">
+            <button type="button" onclick="changeQty(-1)">-</button>
+            <input type="number" id="qty-input" value="1" min="1" readonly>
+            <button type="button" onclick="changeQty(1)">+</button>
+          </div>
+
+          <button class="btn-order" onclick="placeOrder()">
+            <i class="fa-solid fa-cart-shopping"></i> Order Now
+          </button>
+
+          <a id="whatsapp-link" href="https://wa.me/254700000000" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Inquiry
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Joymax Furniture & Metal Work. All rights reserved.
+  </footer>
+
+  <script>
+    let currentProductTitle = "Product";
+
+    // Handle Quantity Adjustments
+    function changeQty(amount) {
+      const input = document.getElementById('qty-input');
+      let currentVal = parseInt(input.value) || 1;
+      currentVal += amount;
+      if (currentVal < 1) currentVal = 1;
+      input.value = currentVal;
+      updateWhatsAppLink();
+    }
+
+    // Update WhatsApp link dynamic message based on title and quantity
+    function updateWhatsAppLink() {
+      const qty = document.getElementById('qty-input').value;
+      const phone = "254700000000"; // Replace with your actual WhatsApp phone number
+      const message = encodeURIComponent(`Hello Joymax, I would like to make an inquiry about: ${currentProductTitle} (Quantity: ${qty}).`);
+      document.getElementById('whatsapp-link').href = `https://wa.me/${phone}?text=${message}`;
+    }
+
+    // Direct order button action
+    function placeOrder() {
+      const qty = document.getElementById('qty-input').value;
+      alert(`Order request initiated for ${qty} x ${currentProductTitle}. Redirecting to WhatsApp...`);
+      const phone = "254700000000";
+      const message = encodeURIComponent(`Hello Joymax, I want to order: ${currentProductTitle} (Quantity: ${qty}).`);
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    }
+
+    // Fetch product details dynamically from Express API
+    async function loadProductDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+
+      if (!productId) {
+        document.getElementById('product-title').innerText = "Product Not Specified";
+        document.getElementById('product-description').innerText = "Please return to the products page and select an item.";
+        return;
+      }
+
+      try {
+        // Fetch all products or specific API endpoint fromExpress backend
+        const response = await fetch('http://127.0.0.1:5050/api/products');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch from server');
+        }
+
+        const products = await response.json();
+        // Match product by ID (handles both integer and string IDs)
+        const product = products.find(p => String(p.id) === String(productId));
+
+        if (product) {
+          currentProductTitle = product.title;
+          
+          // Format price
+          const priceVal = Number(product.price);
+          const formattedPrice = !isNaN(priceVal)
+            ? 'KSh ' + priceVal.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : 'KSh ' + product.price;
+
+          document.getElementById('product-title').innerText = product.title;
+          document.getElementById('breadcrumb-title').innerText = product.title;
+          document.getElementById('product-price').innerText = formattedPrice;
+          document.getElementById('product-img').src = product.image_url;
+          document.getElementById('product-img').alt = product.title;
+
+          if (product.description) {
+            document.getElementById('product-description').innerText = product.description;
+          }
+
+          updateWhatsAppLink();
+        } else {
+          document.getElementById('product-title').innerText = "Product Not Found";
+          document.getElementById('product-description').innerText = "The requested product does not exist in our catalog.";
+        }
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        document.getElementById('product-title').innerText = "Error Loading Product";
+        document.getElementById('product-description').innerText = "Unable to connect to server. Please verify your Express server is running on port 5050.";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProductDetails);
+  </script>
+</body>
+</html>

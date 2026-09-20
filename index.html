@@ -3,46 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joymax</title>
+  <title>Joymax Furniture & Metal Work</title>
   <!-- Favicon / Browser Tab Logo -->
   <link rel="icon" type="image/png" href="images/logo_ii.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
   <!-- Navigation Bar -->
-    <header class="navbar">
-
-        <div class="nav-container">
-
-        <div class="logo">
-
-           <img src="images/logo.png" class="logo-img">
-
-            <span class="logo-text">Joymax <strong>Furniture & Metal Work</strong></span>
-
-        </div> 
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="images/logo.png" class="logo-img" alt="Joymax Logo">
+        <span class="logo-text">Joymax <strong>Furniture & Metal Work</strong></span>
+      </div> 
       
-        <nav class="nav-links">
-            <a href="#" class="active">Home</a>
-            <a href="#">Products</a>
-            <a href="#">Blog</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Materials</a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="product.html">Products</a>
+        <a href="#">Blog</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Materials</a>
+      </nav>
 
-        </nav>
+      <div class="user-profile">
+        <a href="profile.html" class="profile-icon"><i class="fa-solid fa-circle-user"></i></a>
+      </div>
+    </div>
+  </header>
 
-        <div class="user-profile">
-            <a href="profile.html" class="profile-icon"><i class="fa-solid fa-circle-user"></i></a>
-        </div>
-        </div>
-    </header>
-
-<!-- News Ticker Banner -->
-    <div class="ticker-bar">
+  <!-- News Ticker Banner -->
+  <div class="ticker-bar">
     <div class="ticker-wrapper">
-        <div class="ticker-content">
+      <div class="ticker-content">
         <span>Custom Metal & Wooden Furniture Tailored to Your Space! &nbsp;&bull;&nbsp;</span>
         <span>Get 10% Off Your First Custom Order at Joymax &nbsp;&bull;&nbsp;</span>
         <span>Free On-Site Measurement & Design Consultation &nbsp;&bull;&nbsp;</span>
@@ -52,190 +47,189 @@
         <span>Get 10% Off Your First Custom Order at Joymax &nbsp;&bull;&nbsp;</span>
         <span>Free On-Site Measurement & Design Consultation &nbsp;&bull;&nbsp;</span>
         <span>Quality Woodworking Meets Modern Welding Precision &nbsp;&bull;&nbsp;</span>
-        </div>
+      </div>
     </div>
-    </div>
+  </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Crafting Quality Furniture & <br><span>Precision Metal Work</span></h1>
-            <p class="hero-description">
-            At Joymax Furniture & Metal Work, we blend expert woodworking with heavy-duty metal fabrication to deliver stylish, durable, and custom-built solutions for your home or business.
-            </p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Crafting Quality Furniture & <br><span>Precision Metal Work</span></h1>
+      <p class="hero-description">
+        At Joymax Furniture & Metal Work, we blend expert woodworking with heavy-duty metal fabrication to deliver stylish, durable, and custom-built solutions for your home or business.
+      </p>
       
-        <div class="hero-buttons">
-            <a href="#services" class="btn btn-blue">Explore Our Products</a>
-            <a href="#quote" class="btn btn-outline">Request Custom Quote</a>
-        </div>
-        </div>
-    </section>
-    <!-- Featured Products Section -->
-    <section class="featured-products">
+      <div class="hero-buttons">
+        <a href="#featured-products" class="btn btn-blue">Explore Our Products</a>
+        <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Request Custom Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-products" id="featured-products">
     <div class="products-container">
-        <h2 class="section-title">Featured products</h2>
-        <p class="section-subtitle">
+      <h2 class="section-title">Featured products</h2>
+      <p class="section-subtitle">
         Elevate your space with Joymax's pinnacle of furniture craftsmanship and metal fabrication. Meticulously engineered using state-of-the-art technology and premium hardwoods and steel, each piece exemplifies durability, strength, and timeless elegance.
+      </p>
+
+      <!-- Dynamic Product Grid (Populated from PostgreSQL via Express API) -->
+      <div class="product-grid" id="featuredProductGrid">
+        <p style="text-align: center; grid-column: 1 / -1; color: #888; padding: 40px 0;">Loading featured products...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section (Custom Orders & Inquiries) -->
+  <section class="joymax-cta">
+    <div class="cta-container">
+      <span class="cta-subtitle">CUSTOM DESIGN & FABRICATION</span>
+      <h2 class="cta-title">Ready to build your dream space?</h2>
+      <p class="cta-description">
+        Have a custom furniture design or custom metal fabrication project in mind? <br>
+        Chat with our lead craftsman on WhatsApp for instant quotes, custom dimensions, or on-site measurements.
+      </p>
+      <a href="https://wa.me/254700000000" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-whatsapp"></i> CHAT WITH US ON WHATSAPP &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- Main Footer -->
+  <footer class="joymax-footer">
+    <div class="footer-container">
+      
+      <!-- Brand Info Column -->
+      <div class="footer-col brand-col">
+        <div class="footer-logo">
+          <img src="images/logo_ii.png" class="logo-img" alt="Joymax Footer Logo">
+          <span><strong>JOYMAX FURNITURE & METAL WORK</strong></span>
+        </div>
+        <p class="brand-desc">
+          Joymax Furniture & Metal Work is a premier Kenyan fabricator specializing in high-end handcrafted wooden furniture, heavy-duty metal structures, custom gates, and industrial interiors. Quality crafted to last a lifetime.
         </p>
-
-        <div class="product-grid">
-        <!-- Product Card 1 -->
-        <div class="product-card">
-            <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" alt="Executive Living Sofa">
-            </div>
-            <div class="product-info">
-            <h3 class="product-title">JOYMAX EXECUTIVE SOFA®</h3>
-            <p class="product-price">From KSh45,000.00</p>
-            </div>
+        <div class="social-links">
+          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         </div>
-
-        <!-- Product Card 2 -->
-        <div class="product-card">
-            <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80" alt="Steel Gate & Railings">
-            </div>
-            <div class="product-info">
-            <h3 class="product-title">Heavy-Duty Steel Gate®</h3>
-            <p class="product-price">From KSh65,000.00</p>
-            </div>
-        </div>
-
-        <!-- Product Card 3 -->
-        <div class="product-card">
-            <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=600&q=80" alt="Hardwood Dining Table">
-            </div>
-            <div class="product-info">
-            <h3 class="product-title">6-Seater Hardwood Dining Set®</h3>
-            <p class="product-price">KSh38,500.00</p>
-            </div>
-        </div>
-
-        <!-- Product Card 4 -->
-        <div class="product-card">
-            <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80" alt="Metallic Bed Frame">
-            </div>
-            <div class="product-info">
-            <h3 class="product-title">Industrial Steel Bed Frame®</h3>
-            <p class="product-price">From KSh28,000.00</p>
-            </div>
-        </div>
-
-        <!-- Product Card 5 -->
-        <div class="product-card">
-            <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80" alt="Custom Office Desk">
-            </div>
-            <div class="product-info">
-            <h3 class="product-title">Modern Wood-Metal Office Desk®</h3>
-            <p class="product-price">From KSh22,500.00</p>
-            </div>
-        </div>
-        </div>
-    </div>
-    </section>
-
-    <!-- Call to Action Section (Custom Orders & Inquiries) -->
-<section class="joymax-cta">
-  <div class="cta-container">
-    <span class="cta-subtitle">CUSTOM DESIGN & FABRICATION</span>
-    <h2 class="cta-title">Ready to build your dream space?</h2>
-    <p class="cta-description">
-      Have a custom furniture design or custom metal fabrication project in mind? <br>
-      Chat with our lead craftsman on WhatsApp for instant quotes, custom dimensions, or on-site measurements.
-    </p>
-    <a href="https://wa.me/254700000000" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
-      <i class="fa-brands fa-whatsapp"></i> CHAT WITH US ON WHATSAPP &rarr;
-    </a>
-  </div>
-</section>
-<!-- Main Footer -->
-<footer class="joymax-footer">
-  <div class="footer-container">
-    
-    <!-- Brand Info Column -->
-    <div class="footer-col brand-col">
-      <div class="footer-logo">
-         <img src="images/logo_ii.png" class="logo-img">
-        <span><strong>JOYMAX FURNITURE & METAL WORK</strong></span>
       </div>
-      <p class="brand-desc">
-        Joymax Furniture & Metal Work is a premier Kenyan fabricator specializing in high-end handcrafted wooden furniture, heavy-duty metal structures, custom gates, and industrial interiors. Quality crafted to last a lifetime.
-      </p>
-      <div class="social-links">
-        <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+
+      <!-- Products & Services Column -->
+      <div class="footer-col">
+        <h3 class="col-title">Our Products</h3>
+        <ul class="footer-links">
+          <li><a href="#">Living Room Sets</a></li>
+          <li><a href="#">Dining Tables & Chairs</a></li>
+          <li><a href="#">Office Furniture</a></li>
+          <li><a href="#">Bedframes & Wardrobes</a></li>
+          <li><a href="#">Outdoor & Patio Furniture</a></li>
+        </ul>
+      </div>
+
+      <!-- Metal Fabrication Column -->
+      <div class="footer-col">
+        <h3 class="col-title">Metal Work</h3>
+        <ul class="footer-links">
+          <li><a href="#">Custom Security Gates</a></li>
+          <li><a href="#">Staircase Railings & Balustrades</a></li>
+          <li><a href="#">Window Grills & Frames</a></li>
+          <li><a href="#">Industrial Metal Racks</a></li>
+          <li><a href="#">Custom Steel Structures</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Workshop Location Column -->
+      <div class="footer-col contact-col">
+        <h3 class="col-title">Contact & Workshop</h3>
+        <ul class="contact-info">
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>Hotline: +254 700 000 000</span>
+          </li>
+          <li>
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp Orders: +254 700 000 000</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Workshop: Nairobi, Kenya</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-clock"></i>
+            <span>Mon - Sat: 8:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal Links Bar -->
+    <div class="footer-bottom">
+      <div class="bottom-container">
+        <p class="copyright">
+          Copyright &copy; 2026 Joymax Furniture & Metal Work. All rights reserved.
+        </p>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Custom Order Policy</a>
+        </div>
       </div>
     </div>
+  </footer>
 
-    <!-- Products & Services Column -->
-    <div class="footer-col">
-      <h3 class="col-title">Our Products</h3>
-      <ul class="footer-links">
-        <li><a href="#">Living Room Sets</a></li>
-        <li><a href="#">Dining Tables & Chairs</a></li>
-        <li><a href="#">Office Furniture</a></li>
-        <li><a href="#">Bedframes & Wardrobes</a></li>
-        <li><a href="#">Outdoor & Patio Furniture</a></li>
-      </ul>
-    </div>
+  <!-- Script to Fetch Products from Express & PostgreSQL -->
+  <script>
+    async function fetchDatabaseProducts() {
+      const grid = document.getElementById('featuredProductGrid');
 
-    <!-- Metal Fabrication Column -->
-    <div class="footer-col">
-      <h3 class="col-title">Metal Work</h3>
-      <ul class="footer-links">
-        <li><a href="#">Custom Security Gates</a></li>
-        <li><a href="#">Staircase Railings & Balustrades</a></li>
-        <li><a href="#">Window Grills & Frames</a></li>
-        <li><a href="#">Industrial Metal Racks</a></li>
-        <li><a href="#">Custom Steel Structures</a></li>
-      </ul>
-    </div>
+      try {
+        const response = await fetch('http://127.0.0.1:5050/api/products');
+        
+        if (!response.ok) {
+          throw new Error('Server returned error status');
+        }
 
-    <!-- Contact & Workshop Location Column -->
-    <div class="footer-col contact-col">
-      <h3 class="col-title">Contact & Workshop</h3>
-      <ul class="contact-info">
-        <li>
-          <i class="fa-solid fa-phone"></i>
-          <span>Hotline: +254 700 000 000</span>
-        </li>
-        <li>
-          <i class="fa-brands fa-whatsapp"></i>
-          <span>WhatsApp Orders: +254 700 000 000</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-location-dot"></i>
-          <span>Workshop: Nairobi, Kenya</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-clock"></i>
-          <span>Mon - Sat: 8:00 AM - 6:00 PM</span>
-        </li>
-      </ul>
-    </div>
+        const products = await response.json();
 
-  </div>
+        if (products.length === 0) {
+          grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #777;">No products currently found in the database.</p>';
+          return;
+        }
 
-  <!-- Bottom Copyright & Legal Links Bar -->
-  <div class="footer-bottom">
-    <div class="bottom-container">
-      <p class="copyright">
-        Copyright &copy; 2026 Joymax Furniture & Metal Work. All rights reserved.
-      </p>
-      <div class="legal-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Custom Order Policy</a>
-      </div>
-    </div>
-  </div>
-</footer>
+        grid.innerHTML = products.map(product => {
+          const priceValue = Number(product.price);
+          const formattedPrice = !isNaN(priceValue) 
+            ? 'KSh ' + priceValue.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : 'KSh ' + product.price;
+
+          return `
+            <a href="product.html?id=${product.id}" class="product-card-link">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="${product.image_url}" alt="${product.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=Joymax+Product';">
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">${product.title}</h3>
+                  <p class="product-price">${formattedPrice}</p>
+                </div>
+              </div>
+            </a>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Failed to load products:', err);
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #e74c3c; padding: 20px;">Unable to load products. Please ensure node server.js is running on port 5050.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchDatabaseProducts);
+  </script>
 
 </body>
 </html>
