@@ -27,12 +27,13 @@
     .navbar {
       background-color: #0f172a;
       color: #ffffff;
-      padding: 16px 5%;
+      padding: 10px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
+      height: 70px;
       z-index: 100;
     }
 
@@ -49,15 +50,86 @@
       gap: 10px;
     }
 
-    .logo span {
+    .logo img {
+      height: 45px !important;
+      max-height: 45px !important;
+      width: auto !important;
+      display: block;
+    }
+
+      .logo-text {
+      font-weight: 700;
+      }
+
+      .logo-text strong {
+      font-weight: 700;
       color: #f59e0b;
+      }
+
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #f59e0b;
+    }
+
+    /* Cart & Actions Group */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cart-icon-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.25rem;
+      padding: 8px;
+      border-radius: 50%;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .cart-icon-btn:hover {
+      color: #f59e0b;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -2px;
+      right: -4px;
+      background-color: #f59e0b;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      border: 2px solid #0f172a;
     }
 
     .back-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #94a3b8;
+      color: #ffffff;
       text-decoration: none;
       font-size: 0.95rem;
       transition: color 0.2s;
@@ -264,6 +336,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
       .product-grid {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -287,14 +363,32 @@
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Navigation Bar -->
   <header class="navbar">
     <a href="index.html" class="logo">
-      <i class="fa-solid fa-couch"></i> Joymax <span>Furniture & Metal Work</span>
+      <img src="images/logo_ii.png" alt="Joymax Logo">
+      <span class="logo-text">Joymax <strong>Furniture & Metal Work</strong></span>
     </a>
-    <a href="index.html" class="back-btn">
-      <i class="fa-solid fa-arrow-left"></i> Back to Products
-    </a>
+
+    <!-- Page Links -->
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#about">About Us</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <!-- Cart & Actions Group -->
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-icon-btn" aria-label="Shopping Cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-count">0</span>
+      </a>
+
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Products
+      </a>
+    </div>
   </header>
 
   <!-- Main Content -->
@@ -347,11 +441,11 @@
           </div>
 
           <button class="btn-order" onclick="placeOrder()">
-            <i class="fa-solid fa-cart-shopping"></i> Order Now
+            <i class="fa-solid fa-cart-shopping"></i> Add
           </button>
 
-          <a id="whatsapp-link" href="https://wa.me/254700000000" target="_blank" class="btn-whatsapp">
-            <i class="fa-brands fa-whatsapp"></i> Inquiry
+          <a id="whatsapp-link" href="https://wa.me/254798424866" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Order
           </a>
         </div>
       </div>
@@ -363,9 +457,8 @@
   </footer>
 
   <script>
-    let currentProductTitle = "Product";
+    let currentProduct = null;
 
-    // Handle Quantity Adjustments
     function changeQty(amount) {
       const input = document.getElementById('qty-input');
       let currentVal = parseInt(input.value) || 1;
@@ -375,24 +468,28 @@
       updateWhatsAppLink();
     }
 
-    // Update WhatsApp link dynamic message based on title and quantity
     function updateWhatsAppLink() {
       const qty = document.getElementById('qty-input').value;
-      const phone = "254700000000"; // Replace with your actual WhatsApp phone number
-      const message = encodeURIComponent(`Hello Joymax, I would like to make an inquiry about: ${currentProductTitle} (Quantity: ${qty}).`);
+      const title = currentProduct ? currentProduct.title : "Product";
+      const phone = "254798424866"; 
+      const message = encodeURIComponent(`Hello Joymax, I would like to make an inquiry about: ${title} (Quantity: ${qty}).`);
       document.getElementById('whatsapp-link').href = `https://wa.me/${phone}?text=${message}`;
     }
 
-    // Direct order button action
     function placeOrder() {
-      const qty = document.getElementById('qty-input').value;
-      alert(`Order request initiated for ${qty} x ${currentProductTitle}. Redirecting to WhatsApp...`);
-      const phone = "254700000000";
-      const message = encodeURIComponent(`Hello Joymax, I want to order: ${currentProductTitle} (Quantity: ${qty}).`);
-      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+      const qty = parseInt(document.getElementById('qty-input').value) || 1;
+      
+      if (currentProduct && typeof addToCart === 'function') {
+        for (let i = 0; i < qty; i++) {
+          addToCart(currentProduct);
+        }
+      } else if (currentProduct) {
+        const phone = "254798424866";
+        const message = encodeURIComponent(`Hello Joymax, I want to order: ${currentProduct.title} (Quantity: ${qty}).`);
+        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+      }
     }
 
-    // Fetch product details dynamically from Express API
     async function loadProductDetails() {
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('id');
@@ -404,7 +501,6 @@
       }
 
       try {
-        // Fetch all products or specific API endpoint fromExpress backend
         const response = await fetch('http://127.0.0.1:5050/api/products');
         
         if (!response.ok) {
@@ -412,13 +508,11 @@
         }
 
         const products = await response.json();
-        // Match product by ID (handles both integer and string IDs)
         const product = products.find(p => String(p.id) === String(productId));
 
         if (product) {
-          currentProductTitle = product.title;
+          currentProduct = product;
           
-          // Format price
           const priceVal = Number(product.price);
           const formattedPrice = !isNaN(priceVal)
             ? 'KSh ' + priceVal.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -448,5 +542,6 @@
 
     document.addEventListener('DOMContentLoaded', loadProductDetails);
   </script>
+  <script src="cart.js"></script>
 </body>
 </html>

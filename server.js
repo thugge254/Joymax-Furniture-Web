@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 app.use('/products', express.static(path.join(__dirname, 'products')));
 
-// Database Pool
+// Database Pool Configuration
 const pool = new Pool({
   user: 'postgres',
   host: '127.0.0.1',
@@ -28,7 +28,7 @@ const pool = new Pool({
   port: 5433,
 });
 
-// Test Connection
+// Test Database Connection
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Database Connection Error:', err.message);
@@ -46,7 +46,45 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
+// ==========================================
 // Authentication Routes
+// ==========================================
+
+// User Registration Route
+app.post('/api/register', async (req, res) => {
+  const { full_name, email, password } = req.body;
+
+  if (!full_name || !email || !password) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    // Check if user exists
+    const userCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (userCheck.rows.length > 0) {
+      return res.status(400).json({ message: 'Email is already registered.' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
+    // Insert new user into database
+    const newUser = await pool.query(
+      'INSERT INTO users (full_name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, full_name, email',
+      [full_name, email, hashedPassword]
+    );
+
+    res.status(201).json({
+      message: 'Account created successfully!',
+      user: newUser.rows[0]
+    });
+  } catch (err) {
+    console.error('Registration Error:', err.message);
+    res.status(500).json({ message: 'Server error during registration.' });
+  }
+});
+
+// User Login Route
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -73,7 +111,9 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// ==========================================
 // Product API Routes
+// ==========================================
 
 // Get all products
 app.get('/api/products', async (req, res) => {
@@ -101,7 +141,10 @@ app.get('/api/products/:id', async (req, res) => {
   }
 });
 
-// Start Server
-app.listen(PORT, '127.0.0.1', () => {
+// Start Server & Keep Process Active
+const server = app.listen(PORT, '127.0.0.1', () => {
   console.log(`Server running on http://127.0.0.1:${PORT}`);
 });
+
+// Fallback interval to ensure Node process stays active in PowerShell
+setInterval(() => {}, 100000);
