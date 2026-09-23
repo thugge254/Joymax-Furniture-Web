@@ -254,6 +254,24 @@
     document.addEventListener('DOMContentLoaded', fetchDatabaseProducts);
 </script>
 
-  <script src="cart.js"></script>
+<script src="cart.js"></script>
+<!-- Add this right before </body> at the bottom of index.html -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get('category');
+
+    if (selectedCategory) {
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
+  
 </body>
 </html>
