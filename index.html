@@ -188,53 +188,73 @@
   </footer>
 
   <!-- Script to Fetch Products from Express & PostgreSQL -->
-  <script>
+
+<script>
     async function fetchDatabaseProducts() {
-      const grid = document.getElementById('featuredProductGrid');
+        const grid = document.getElementById('featuredProductGrid');
 
-      try {
-        const response = await fetch('http://127.0.0.1:5050/api/products');
-        
-        if (!response.ok) {
-          throw new Error('Server returned error status');
+        try {
+            const response = await fetch('/api/products');
+
+            if (!response.ok) {
+                throw new Error('Server returned error status');
+            }
+
+            const products = await response.json();
+
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <p style="grid-column: 1/-1; text-align: center; color: #777;">
+                        No products currently found in the database.
+                    </p>
+                `;
+                return;
+            }
+
+            grid.innerHTML = products.map(product => {
+                const priceValue = Number(product.price);
+
+                const formattedPrice = !isNaN(priceValue)
+                    ? 'KSh ' + priceValue.toLocaleString('en-KE', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })
+                    : 'KSh ' + product.price;
+
+                return `
+                    <a href="product.html?id=${product.id}" class="product-card-link">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img
+                                    src="${product.image_url}"
+                                    alt="${product.title}"
+                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=Joymax+Product';"
+                                >
+                            </div>
+
+                            <div class="product-info">
+                                <h3 class="product-title">${product.title}</h3>
+                                <p class="product-price">${formattedPrice}</p>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+        } catch (err) {
+            console.error('Failed to load products:', err);
+
+            grid.innerHTML = `
+                <p style="grid-column: 1/-1; text-align: center; color: #e74c3c; padding: 20px;">
+                    Unable to load products. Please try again later.
+                </p>
+            `;
         }
-
-        const products = await response.json();
-
-        if (products.length === 0) {
-          grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #777;">No products currently found in the database.</p>';
-          return;
-        }
-
-        grid.innerHTML = products.map(product => {
-          const priceValue = Number(product.price);
-          const formattedPrice = !isNaN(priceValue) 
-            ? 'KSh ' + priceValue.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-            : 'KSh ' + product.price;
-
-          return `
-            <a href="product.html?id=${product.id}" class="product-card-link">
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="${product.image_url}" alt="${product.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=Joymax+Product';">
-                </div>
-                <div class="product-info">
-                  <h3 class="product-title">${product.title}</h3>
-                  <p class="product-price">${formattedPrice}</p>
-                </div>
-              </div>
-            </a>
-          `;
-        }).join('');
-
-      } catch (err) {
-        console.error('Failed to load products:', err);
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #e74c3c; padding: 20px;">Unable to load products. Please ensure node server.js is running on port 5050.</p>';
-      }
     }
 
     document.addEventListener('DOMContentLoaded', fetchDatabaseProducts);
-  </script>
+</script>
+
   <script src="cart.js"></script>
 </body>
 </html>
