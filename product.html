@@ -541,91 +541,173 @@
   </footer>
 
   <script>
+    // Stores the currently selected product loaded from the Express & PostgreSQL API
     let currentProduct = null;
 
+
+    // Increase or decrease the product quantity
     function changeQty(amount) {
-      const input = document.getElementById('qty-input');
-      let currentVal = parseInt(input.value) || 1;
-      currentVal += amount;
-      if (currentVal < 1) currentVal = 1;
-      input.value = currentVal;
-      updateWhatsAppLink();
+        const input = document.getElementById('qty-input');
+        let currentVal = parseInt(input.value) || 1;
+
+        currentVal += amount;
+
+        // Prevent the quantity from going below 1
+        if (currentVal < 1) {
+            currentVal = 1;
+        }
+
+        input.value = currentVal;
+
+        // Update the WhatsApp inquiry link with the new quantity
+        updateWhatsAppLink();
     }
 
+
+    // Create the WhatsApp inquiry link using the selected product and quantity
     function updateWhatsAppLink() {
-      const qty = document.getElementById('qty-input').value;
-      const title = currentProduct ? currentProduct.title : "Product";
-      const phone = "254798424866"; 
-      const message = encodeURIComponent(`Hello Joymax, I would like to make an inquiry about: ${title} (Quantity: ${qty}).`);
-      document.getElementById('whatsapp-link').href = `https://wa.me/${phone}?text=${message}`;
-    }
-
-    function placeOrder() {
-      const qty = parseInt(document.getElementById('qty-input').value) || 1;
-      
-      if (currentProduct && typeof addToCart === 'function') {
-        for (let i = 0; i < qty; i++) {
-          addToCart(currentProduct);
-        }
-      } else if (currentProduct) {
+        const qty = document.getElementById('qty-input').value;
+        const title = currentProduct ? currentProduct.title : "Product";
         const phone = "254798424866";
-        const message = encodeURIComponent(`Hello Joymax, I want to order: ${currentProduct.title} (Quantity: ${qty}).`);
-        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-      }
+
+        const message = encodeURIComponent(
+            `Hello Joymax, I would like to make an inquiry about: ${title} (Quantity: ${qty}).`
+        );
+
+        document.getElementById('whatsapp-link').href =
+            `https://wa.me/${phone}?text=${message}`;
     }
 
+
+    // Add the selected product to the shopping cart or send the order through WhatsApp
+    function placeOrder() {
+        const qty = parseInt(document.getElementById('qty-input').value) || 1;
+
+        if (currentProduct && typeof addToCart === 'function') {
+
+            // Add the product to the cart once for each requested quantity
+            for (let i = 0; i < qty; i++) {
+                addToCart(currentProduct);
+            }
+
+        } else if (currentProduct) {
+
+            // If the cart function is unavailable, send the order directly through WhatsApp
+            const phone = "254798424866";
+
+            const message = encodeURIComponent(
+                `Hello Joymax, I want to order: ${currentProduct.title} (Quantity: ${qty}).`
+            );
+
+            window.open(
+                `https://wa.me/${phone}?text=${message}`,
+                '_blank'
+            );
+        }
+    }
+
+
+    // Load the selected product details from the Express & PostgreSQL API
     async function loadProductDetails() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const productId = urlParams.get('id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
 
-      if (!productId) {
-        document.getElementById('product-title').innerText = "Product Not Specified";
-        document.getElementById('product-description').innerText = "Please return to the products page and select an item.";
-        return;
-      }
+        // Check whether a product ID was provided in the URL
+        if (!productId) {
+            document.getElementById('product-title').innerText =
+                "Product Not Specified";
 
-      try {
-        const response = await fetch('http://127.0.0.1:5050/api/products');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch from server');
+            document.getElementById('product-description').innerText =
+                "Please return to the products page and select an item.";
+
+            return;
         }
 
-        const products = await response.json();
-        const product = products.find(p => String(p.id) === String(productId));
+        try {
+            // Use a relative API URL so the website works on both localhost and Render
+            const response = await fetch('/api/products');
 
-        if (product) {
-          currentProduct = product;
-          
-          const priceVal = Number(product.price);
-          const formattedPrice = !isNaN(priceVal)
-            ? 'KSh ' + priceVal.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-            : 'KSh ' + product.price;
+            if (!response.ok) {
+                throw new Error('Failed to fetch products from server');
+            }
 
-          document.getElementById('product-title').innerText = product.title;
-          document.getElementById('breadcrumb-title').innerText = product.title;
-          document.getElementById('product-price').innerText = formattedPrice;
-          document.getElementById('product-img').src = product.image_url;
-          document.getElementById('product-img').alt = product.title;
+            const products = await response.json();
 
-          if (product.description) {
-            document.getElementById('product-description').innerText = product.description;
-          }
+            // Find the product matching the ID in the URL
+            const product = products.find(
+                p => String(p.id) === String(productId)
+            );
 
-          updateWhatsAppLink();
-        } else {
-          document.getElementById('product-title').innerText = "Product Not Found";
-          document.getElementById('product-description').innerText = "The requested product does not exist in our catalog.";
+            if (product) {
+                // Store the selected product for use by other functions
+                currentProduct = product;
+
+                // Convert the product price to a number
+                const priceVal = Number(product.price);
+
+                // Format the price in Kenyan Shillings
+                const formattedPrice = !isNaN(priceVal)
+                    ? 'KSh ' + priceVal.toLocaleString('en-KE', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })
+                    : 'KSh ' + product.price;
+
+                // Display the product information on the page
+                document.getElementById('product-title').innerText =
+                    product.title;
+
+                document.getElementById('breadcrumb-title').innerText =
+                    product.title;
+
+                document.getElementById('product-price').innerText =
+                    formattedPrice;
+
+                // Display the product image
+                document.getElementById('product-img').src =
+                    product.image_url;
+
+                document.getElementById('product-img').alt =
+                    product.title;
+
+                // Display the product description if one exists
+                if (product.description) {
+                    document.getElementById('product-description').innerText =
+                        product.description;
+                }
+
+                // Update the WhatsApp link with the selected product
+                updateWhatsAppLink();
+
+            } else {
+
+                // Display a message when the requested product does not exist
+                document.getElementById('product-title').innerText =
+                    "Product Not Found";
+
+                document.getElementById('product-description').innerText =
+                    "The requested product does not exist in our catalog.";
+            }
+
+        } catch (err) {
+
+            // Log the technical error to the browser console
+            console.error('Error fetching product:', err);
+
+            // Display a user-friendly error message
+            document.getElementById('product-title').innerText =
+                "Error Loading Product";
+
+            document.getElementById('product-description').innerText =
+                "Unable to load this product. Please try again later.";
         }
-      } catch (err) {
-        console.error('Error fetching product:', err);
-        document.getElementById('product-title').innerText = "Error Loading Product";
-        document.getElementById('product-description').innerText = "Unable to connect to server. Please verify your Express server is running on port 5050.";
-      }
     }
 
+
+    // Load the product details automatically when the page finishes loading
     document.addEventListener('DOMContentLoaded', loadProductDetails);
-  </script>
+</script>
+
   <script src="cart.js"></script>
 </body>
 </html>
