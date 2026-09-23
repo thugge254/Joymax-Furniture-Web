@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -135,4 +137,9 @@ app.get('/api/products/:id', async (req, res) => {
     console.error('Fetch Product Error:', err.message);
     res.status(500).json({ message: 'Server error fetching product.' });
   }
+});
+
+// Start Server
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
