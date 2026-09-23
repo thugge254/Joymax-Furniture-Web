@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Joymax Furniture & Metal Work</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon / Browser Tab Logo -->
+  <link rel="icon" type="image/png" href="images/logo_ii.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #0b111f;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .cart-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cart-header {
+      margin-bottom: 30px;
+    }
+
+    .cart-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .cart-header p {
+      color: #64748b;
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    /* Cart Items Section */
+    .cart-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cart-item-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #e2e8f0;
+    }
+
+    .cart-item-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 8px;
+      object-fit: cover;
+      background-color: #f1f5f9;
+      flex-shrink: 0;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-unit-price {
+      font-size: 0.95rem;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    /* Quantity Selector */
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f8fafc;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #475569;
+      transition: background 0.2s;
+    }
+
+    .qty-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .qty-value {
+      width: 38px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #ffffff;
+      border-left: 1px solid #cbd5e1;
+      border-right: 1px solid #cbd5e1;
+      line-height: 32px;
+    }
+
+    .cart-item-total {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-left: auto;
+      padding-right: 15px;
+    }
+
+    .btn-delete-item {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #ef4444;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .btn-delete-item:hover {
+      background: #fee2e2;
+    }
+
+    /* Actions below items */
+    .cart-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #475569;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-continue:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .btn-clear-cart {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .btn-clear-cart:hover {
+      text-decoration: underline;
+    }
+
+    /* Order Summary Sidebar */
+    .summary-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .summary-card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    .summary-row.total-row {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 16px;
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 12px;
+      background-color: #059669;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+
+    .btn-checkout:hover {
+      background-color: #047857;
+    }
+
+    .btn-whatsapp-checkout {
+      width: 100%;
+      padding: 12px;
+      background-color: transparent;
+      border: 1px solid #059669;
+      color: #059669;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-whatsapp-checkout:hover {
+      background-color: #ecfdf5;
+    }
+
+    .summary-footnote {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 20px;
+      line-height: 1.4;
+    }
+
+    .empty-cart-msg {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 850px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .cart-title-link {
+    text-decoration: none;
+    color: inherit;
+    }
+
+    .cart-title-link:hover .cart-item-title {
+    color: #059669; /* Theme green hover color */
+    text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>Your Cart</h1>
+      <p>Review your items, then check out online or via WhatsApp.</p>
+    </div>
+
+    <div class="cart-layout">
+      <!-- Left Column: Items -->
+      <div id="cartLeftCol">
+        <div class="cart-items-list" id="cartItemsList">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <div class="cart-actions-bar">
+          <a href="index.html#products" class="btn-continue">
+            <i class="fa-solid fa-arrow-left"></i> Continue shopping
+          </a>
+          <button class="btn-clear-cart" id="clearCartBtn">Clear cart</button>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div class="summary-card">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Items (<span id="totalItemCount">0</span>)</span>
+          <span id="subtotalPrice">KSh 0</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span id="totalPrice">KSh 0</span>
+        </div>
+
+        <button class="btn-checkout" id="checkoutBtn">
+          <i class="fa-solid fa-lock"></i> Proceed to checkout
+        </button>
+
+        <a href="#" class="btn-whatsapp-checkout" id="whatsappCheckoutBtn" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Or order via WhatsApp
+        </a>
+
+        <p class="summary-footnote">
+          Pay online with Paystack or on delivery. We deliver across Kenya.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <footer class="joymax-footer">
+    <div class="footer-container">
+      
+      <!-- Brand Info Column -->
+      <div class="footer-col brand-col">
+        <div class="footer-logo">
+          <img src="images/logo_ii.png" class="logo-img" alt="Joymax Footer Logo">
+          <span><strong>JOYMAX FURNITURE & METAL WORK</strong></span>
+        </div>
+        <p class="brand-desc">
+          Joymax Furniture & Metal Work is a premier Kenyan fabricator specializing in high-end handcrafted wooden furniture, heavy-duty metal structures, custom gates, and industrial interiors. Quality crafted to last a lifetime.
+        </p>
+        <div class="social-links">
+          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <!-- Products & Services Column -->
+      <div class="footer-col">
+        <h3 class="col-title">Our Products</h3>
+        <ul class="footer-links">
+          <li><a href="#">Living Room Sets</a></li>
+          <li><a href="#">Dining Tables & Chairs</a></li>
+          <li><a href="#">Office Furniture</a></li>
+          <li><a href="#">Bedframes & Wardrobes</a></li>
+          <li><a href="#">Outdoor & Patio Furniture</a></li>
+        </ul>
+      </div>
+
+      <!-- Metal Fabrication Column -->
+      <div class="footer-col">
+        <h3 class="col-title">Metal Work</h3>
+        <ul class="footer-links">
+          <li><a href="#">Custom Security Gates</a></li>
+          <li><a href="#">Staircase Railings & Balustrades</a></li>
+          <li><a href="#">Window Grills & Frames</a></li>
+          <li><a href="#">Industrial Metal Racks</a></li>
+          <li><a href="#">Custom Steel Structures</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Workshop Location Column -->
+      <div class="footer-col contact-col">
+        <h3 class="col-title">Contact & Workshop</h3>
+        <ul class="contact-info">
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>Hotline: +254 798424866</span>
+          </li>
+          <li>
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp Orders: +254 798424866</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Workshop: Nairobi, Kenya</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-clock"></i>
+            <span>Mon - Sat: 8:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal Links Bar -->
+    <div class="footer-bottom">
+      <div class="bottom-container">
+        <p class="copyright">
+          Copyright &copy; 2026 Joymax Furniture & Metal Work. All rights reserved.
+        </p>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Custom Order Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const PHONE_NUMBER = "+254798424866"; // Replace with your phone number
+
+    // Load Cart from localStorage
+    function getCart() {
+      return JSON.parse(localStorage.getItem('joymax_cart')) || [];
+    }
+
+    // Save Cart to localStorage
+    function saveCart(cart) {
+      localStorage.setItem('joymax_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    // Format currency numbers
+    function formatKSh(amount) {
+      return 'KSh ' + Number(amount).toLocaleString('en-KE', { minimumFractionDigits: 0 });
+    }
+    // Render Cart Contents
+    function renderCart() {
+      const cart = getCart();
+      const cartItemsList = document.getElementById('cartItemsList');
+      const totalItemCount = document.getElementById('totalItemCount');
+      const subtotalPrice = document.getElementById('subtotalPrice');
+      const totalPrice = document.getElementById('totalPrice');
+      const whatsappBtn = document.getElementById('whatsappCheckoutBtn');
+
+      if (cart.length === 0) {
+        cartItemsList.innerHTML = `
+          <div class="empty-cart-msg">
+            <h3>Your cart is currently empty.</h3>
+            <p style="margin-top:8px; color:#64748b;">Add items from our collection to view them here.</p>
+          </div>
+        `;
+        totalItemCount.textContent = '0';
+        subtotalPrice.textContent = formatKSh(0);
+        totalPrice.textContent = formatKSh(0);
+        whatsappBtn.href = "#";
+        return;
+      }
+
+      let grandTotal = 0;
+      let itemCount = 0;
+      let whatsappMessage = "Hello Joymax Furniture, I would like to order:\n\n";
+
+      cartItemsList.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        grandTotal += itemTotal;
+        itemCount += item.quantity;
+
+        whatsappMessage += `- ${item.title} (x${item.quantity}) @ ${formatKSh(itemTotal)}\n`;
+
+        return `
+          <div class="cart-item-card">
+            <!-- Clickable Product Image Link -->
+            <a href="product.html?id=${item.id}" style="text-decoration: none; display: inline-block;">
+              <img src="${item.image_url || 'images/logo_ii.png'}" alt="${item.title}" class="cart-item-img">
+            </a>
+
+            <div class="cart-item-details">
+              <!-- Clickable Product Title Link -->
+              <a href="product.html?id=${item.id}" style="text-decoration: none; color: inherit;" onmouseover="this.querySelector('.cart-item-title').style.color='#059669'" onmouseout="this.querySelector('.cart-item-title').style.color='#0f172a'">
+                <div class="cart-item-title">${item.title}</div>
+              </a>
+
+              <div class="cart-item-unit-price">${formatKSh(item.price)}</div>
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                <div class="qty-value">${item.quantity}</div>
+                <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-item-total">${formatKSh(itemTotal)}</div>
+            <button class="btn-delete-item" onclick="removeItem(${index})" title="Remove item">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      totalItemCount.textContent = itemCount;
+      subtotalPrice.textContent = formatKSh(grandTotal);
+      totalPrice.textContent = formatKSh(grandTotal);
+
+      whatsappMessage += `\nTotal: ${formatKSh(grandTotal)}`;
+      whatsappBtn.href = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+    }
+    // Update Quantity (+ / -)
+    window.updateQty = function(index, change) {
+      let cart = getCart();
+      cart[index].quantity += change;
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart(cart);
+    };
+
+    // Remove single item
+    window.removeItem = function(index) {
+      let cart = getCart();
+      cart.splice(index, 1);
+      saveCart(cart);
+    };
+
+    // Clear entire cart
+    document.getElementById('clearCartBtn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear your cart?')) {
+        saveCart([]);
+      }
+    });
+
+    // Initial load
+    renderCart();
+  </script>
+</body>
+</html>
