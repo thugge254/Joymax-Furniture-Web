@@ -21,11 +21,7 @@ app.use('/products', express.static(path.join(__dirname, 'products')));
 
 // Database Pool Configuration
 const pool = new Pool({
-  user: 'postgres',
-  host: '127.0.0.1',
-  database: 'joymax_db',
-  password: 'iloveGOD55,', 
-  port: 5433,
+  connectionString: process.env.DATABASE_URL
 });
 
 // Test Database Connection
@@ -140,11 +136,3 @@ app.get('/api/products/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error fetching product.' });
   }
 });
-
-// Start Server & Keep Process Active
-const server = app.listen(PORT, '127.0.0.1', () => {
-  console.log(`Server running on http://127.0.0.1:${PORT}`);
-});
-
-// Fallback interval to ensure Node process stays active in PowerShell
-setInterval(() => {}, 100000);
