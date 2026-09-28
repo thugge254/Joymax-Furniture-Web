@@ -136,50 +136,54 @@
   </div>
 
   <script>
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // Dynamically set API URL depending on whether you are running locally or on Render
+  const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5050'
+    : 'https://joymax-furniture.onrender.com'; // Replace with your live Render backend URL if different
 
-      const form = e.target;
-      const full_name = form.fullname.value;
-      const email = form.email.value;
-      const phone = form.phone.value;
-      const country = form.country.value;
-      const password = form.password.value;
-      const confirm_password = form.confirm_password.value;
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      if (password !== confirm_password) {
-        alert("Passwords do not match!");
-        return;
+    const form = e.target;
+    const full_name = form.fullname.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const country = form.country.value;
+    const password = form.password.value;
+    const confirm_password = form.confirm_password.value;
+
+    if (password !== confirm_password) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name,
+          email,
+          phone,
+          country,
+          password,
+          confirm_password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Registration successful!');
+        window.location.href = 'login.html';
+      } else {
+        alert(data.error || 'Registration failed.');
       }
-
-      try {
-        const response = await fetch('http://localhost:5050/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            full_name,
-            email,
-            phone,
-            country,
-            password,
-            confirm_password
-          })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert('Registration successful!');
-          window.location.href = 'login.html';
-        } else {
-          alert(data.error || 'Registration failed.');
-        }
-      } catch (err) {
-        console.error('Submission error:', err);
-        alert('Could not connect to the backend server.');
-      }
-    });
-  </script>
-
+    } catch (err) {
+      console.error('Submission error:', err);
+      alert('Could not connect to the backend server.');
+    }
+  });
+</script>
 </body>
 </html>
